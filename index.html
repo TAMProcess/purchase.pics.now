@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>purchase.pics.now</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent:    #a78bfa;
+      --accent-2:  #60a5fa;
+      --accent-3:  #f472b6;
+      --dark:      #06060f;
+      --glass-bg:  rgba(255,255,255,0.07);
+      --glass-bd:  rgba(255,255,255,0.14);
+      --text:      rgba(255,255,255,0.93);
+      --muted:     rgba(255,255,255,0.45);
+      --r-card:    20px;
+      --r-lg:      28px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Animated gradient background ── */
+    .bg-layer {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 50% at 15% 15%, rgba(167,139,250,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 85% 85%, rgba(96,165,250,.15)  0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 50% 45%, rgba(244,114,182,.09) 0%, transparent 70%);
+      animation: bgPulse 9s ease-in-out infinite alternate;
+    }
+    @keyframes bgPulse {
+      from { opacity: .65; transform: scale(1);    }
+      to   { opacity: 1;   transform: scale(1.06); }
+    }
+
+    /* ── Floating soft orbs ── */
+    .orb {
+      position: fixed; border-radius: 50%; filter: blur(90px);
+      z-index: 0; pointer-events: none;
+      animation: floatOrb 14s ease-in-out infinite alternate;
+    }
+    .orb-1 { width:320px; height:320px; background:rgba(167,139,250,.18); top:-120px; left:-100px; animation-delay:0s; }
+    .orb-2 { width:420px; height:420px; background:rgba(96,165,250,.13);  bottom:-160px; right:-130px; animation-delay:-5s; }
+    .orb-3 { width:260px; height:260px; background:rgba(244,114,182,.11); top:45%; left:55%; animation-delay:-9s; }
+    @keyframes floatOrb {
+      from { transform: translate(0,0) scale(1);      }
+      to   { transform: translate(25px,-45px) scale(1.08); }
+    }
+
+    /* ── Noise texture ── */
+    .noise {
+      position: fixed; inset: 0; z-index: 999; pointer-events: none; opacity: .35;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+    }
+
+    /* ── Layout ── */
+    .wrap {
+      position: relative; z-index: 1;
+      max-width: 480px; margin: 0 auto;
+      padding: 0 14px 120px;
+    }
+
+    /* ══════════════════════════════
+       STAGE CARD
+    ══════════════════════════════ */
+    .stage-wrap { perspective: 1200px; margin: 22px 0 20px; }
+
+    .stage {
+      background: var(--glass-bg);
+      backdrop-filter: blur(32px) saturate(200%);
+      -webkit-backdrop-filter: blur(32px) saturate(200%);
+      border: 1px solid var(--glass-bd);
+      border-radius: var(--r-lg);
+      padding: 22px 18px 18px;
+      position: relative; overflow: hidden;
+      box-shadow:
+        0 24px 64px rgba(0,0,0,.55),
+        0 1px 0  rgba(255,255,255,.22) inset,
+        0 0  0 1px rgba(255,255,255,.04) inset;
+      transform-style: preserve-3d;
+      transition: transform .35s ease, box-shadow .35s ease;
+      animation: fadeUp .65s ease both;
+    }
+    /* top shine */
+    .stage::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.45) 50%, transparent 100%);
+    }
+    /* inner gradient tint */
+    .stage::after {
+      content:''; position:absolute; inset:0; pointer-events:none; border-radius: var(--r-lg);
+      background: linear-gradient(135deg, rgba(167,139,250,.1) 0%, transparent 55%, rgba(96,165,250,.08) 100%);
+    }
+
+    /* ── avatar row ── */
+    .stage-header { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+
+    .avatar {
+      width:52px; height:52px; border-radius:50%; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:800; font-size:20px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 4px 20px rgba(167,139,250,.5);
+      position: relative;
+    }
+    .avatar::after {
+      content:''; position:absolute; inset:-2px; border-radius:50%; z-index:-1;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3));
+      animation: spinBorder 4s linear infinite;
+    }
+    @keyframes spinBorder { to { transform: rotate(360deg); } }
+
+    .user-info { flex:1; }
+    .username  { font-size:18px; font-weight:800; letter-spacing:-.4px; }
+    .user-sub  { font-size:11px; color: var(--muted); margin-top:2px; }
+
+    .verified {
+      width:28px; height:28px; border-radius:50%;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      display:flex; align-items:center; justify-content:center;
+      font-size:13px; font-weight:700;
+      box-shadow: 0 4px 14px rgba(96,165,250,.4);
+    }
+
+    /* ── payment chips ── */
+    .pay-label {
+      font-size:10px; font-weight:700; letter-spacing:1.4px;
+      text-transform:uppercase; color: var(--muted); margin-bottom:9px;
+    }
+    .pay-row   { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:16px; }
+    .pay-chip  {
+      display:flex; align-items:center; gap:5px;
+      padding:5px 11px;
+      background: rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.11);
+      border-radius:20px; font-size:11px; font-weight:600;
+      backdrop-filter:blur(10px); cursor:pointer;
+      transition: all .3s ease;
+    }
+    .pay-chip:hover {
+      background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.3);
+      transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.3);
+    }
+    .pay-chip .pi { font-size:13px; }
+
+    /* ── stats row ── */
+    .stats {
+      display:flex; gap:1px;
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:14px; overflow:hidden;
+    }
+    .stat { flex:1; padding:10px 6px; text-align:center; }
+    .stat-n {
+      font-size:15px; font-weight:800;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .stat-l { font-size:9px; color: var(--muted); text-transform:uppercase; letter-spacing:.8px; margin-top:2px; }
+
+    /* ══════════════════════════════
+       NAV BAR
+    ══════════════════════════════ */
+    .nav-outer { position: sticky; top:14px; z-index:100; margin-bottom:22px; }
+
+    nav {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:11px 16px;
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(32px) saturate(200%);
+      -webkit-backdrop-filter: blur(32px) saturate(200%);
+      border:1px solid var(--glass-bd);
+      border-radius:18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.16) inset;
+      animation: fadeUp .65s .08s ease both;
+    }
+
+    .logo {
+      font-size:14px; font-weight:900; letter-spacing:-.4px;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,.75) 100%);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .logo em {
+      font-style:normal;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+
+    .hbg {
+      width:36px; height:36px; border-radius:10px;
+      background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.11);
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+      cursor:pointer; transition: all .25s ease;
+    }
+    .hbg:hover { background: rgba(255,255,255,.16); transform:scale(1.06); }
+    .bar { width:15px; height:1.5px; background:rgba(255,255,255,.8); border-radius:2px; transition: all .3s ease; }
+    .hbg.open .bar:nth-child(1) { transform: rotate(45deg) translate(4px,4px); }
+    .hbg.open .bar:nth-child(2) { opacity:0; transform:translateX(-8px); }
+    .hbg.open .bar:nth-child(3) { transform: rotate(-45deg) translate(4px,-4px); }
+
+    /* dropdown */
+    .nav-outer { position:relative; }
+    .dropdown {
+      position:absolute; top:calc(100% + 8px); right:0; width:210px;
+      background: rgba(10,10,28,.92);
+      backdrop-filter: blur(32px) saturate(200%);
+      -webkit-backdrop-filter: blur(32px) saturate(200%);
+      border:1px solid rgba(255,255,255,.11);
+      border-radius:18px; padding:8px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.65);
+      opacity:0; visibility:hidden;
+      transform: translateY(-8px) scale(.97);
+      transition: all .3s cubic-bezier(.34,1.56,.64,1);
+    }
+    .dropdown.open { opacity:1; visibility:visible; transform: translateY(0) scale(1); }
+    .di {
+      display:flex; align-items:center; gap:10px;
+      padding:11px 13px; border-radius:12px;
+      font-size:13px; font-weight:500; color:rgba(255,255,255,.7);
+      cursor:pointer; transition: all .2s ease;
+    }
+    .di:hover { background: rgba(255,255,255,.08); color:#fff; }
+    .di-icon {
+      width:28px; height:28px; border-radius:8px;
+      background: rgba(255,255,255,.07);
+      display:flex; align-items:center; justify-content:center; font-size:14px;
+    }
+
+    /* ══════════════════════════════
+       SECTION LABEL
+    ══════════════════════════════ */
+    .sec-label {
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom:13px;
+    }
+    .sec-title { font-size:15px; font-weight:700; letter-spacing:-.2px; }
+    .sec-tag {
+      font-size:10px; font-weight:700; padding:4px 10px;
+      background: rgba(167,139,250,.14); border:1px solid rgba(167,139,250,.3);
+      border-radius:20px; color:var(--accent); letter-spacing:.4px;
+    }
+
+    /* ══════════════════════════════
+       PHOTO GRID
+    ══════════════════════════════ */
+    .grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:11px;
+    }
+
+    /* ── card ── */
+    .card {
+      position:relative; border-radius: var(--r-card);
+      overflow:hidden; aspect-ratio:3/4;
+      cursor:pointer;
+      box-shadow:
+        0 12px 40px rgba(0,0,0,.52),
+        0 0 0 1px rgba(255,255,255,.06);
+      transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease;
+    }
+    .card:hover {
+      transform: translateY(-7px) scale(1.025);
+      box-shadow:
+        0 24px 60px rgba(0,0,0,.6),
+        0 0 0 1px rgba(255,255,255,.13),
+        0 0 45px rgba(167,139,250,.18);
+    }
+    .card:active { transform: scale(.97); }
+
+    /* glow ring on hover */
+    .card::before {
+      content:''; position:absolute; inset:-1px;
+      border-radius: calc(var(--r-card) + 1px); z-index:-1;
+      background: linear-gradient(135deg, rgba(167,139,250,0), rgba(96,165,250,0));
+      transition: background .4s ease;
+    }
+    .card:hover::before {
+      background: linear-gradient(135deg, rgba(167,139,250,.45), rgba(96,165,250,.3), rgba(244,114,182,.2));
+    }
+
+    /* bg photo */
+    .photo-bg {
+      position:absolute; inset:0;
+      background-size:cover; background-position:center;
+      transform:scale(1.06); transition: transform .7s ease;
+    }
+    .card:hover .photo-bg { transform:scale(1.13); }
+
+    /* liquid glass overlay */
+    .lg-overlay {
+      position:absolute; inset:0;
+      backdrop-filter: blur(14px) saturate(160%) brightness(.83);
+      -webkit-backdrop-filter: blur(14px) saturate(160%) brightness(.83);
+      background: rgba(8,8,24,.32);
+      transition: backdrop-filter .4s ease;
+    }
+    .card:hover .lg-overlay {
+      backdrop-filter: blur(9px) saturate(200%) brightness(.9) hue-rotate(6deg);
+      -webkit-backdrop-filter: blur(9px) saturate(200%) brightness(.9) hue-rotate(6deg);
+    }
+    /* top shine */
+    .lg-overlay::before {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(135deg, rgba(255,255,255,.13) 0%, transparent 45%, rgba(255,255,255,.04) 100%);
+    }
+    /* edge border */
+    .lg-overlay::after {
+      content:''; position:absolute; inset:1px;
+      border-radius: calc(var(--r-card) - 1px);
+      border:1px solid rgba(255,255,255,.14); pointer-events:none;
+    }
+
+    /* card inner content */
+    .cc {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column; justify-content:space-between; padding:11px;
+    }
+    .cc-top { display:flex; justify-content:space-between; align-items:flex-start; }
+
+    .badge {
+      padding:3px 8px; border-radius:20px;
+      font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.7px;
+      background: rgba(0,0,0,.4); backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.8);
+    }
+    .badge.new  { background:rgba(167,139,250,.25); border-color:rgba(167,139,250,.4); color:#c4b5fd; }
+    .badge.hot  { background:rgba(244,114,182,.25); border-color:rgba(244,114,182,.4); color:#f9a8d4; }
+    .badge.excl { background:rgba(96,165,250,.2);   border-color:rgba(96,165,250,.35);  color:#93c5fd; }
+
+    .fav {
+      width:28px; height:28px; border-radius:50%;
+      background: rgba(0,0,0,.4); backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,.12);
+      display:flex; align-items:center; justify-content:center;
+      font-size:13px; cursor:pointer; transition: all .3s ease;
+    }
+    .fav:hover { background:rgba(244,114,182,.3); border-color:rgba(244,114,182,.5); transform:scale(1.15); }
+
+    .cc-bottom { display:flex; flex-direction:column; gap:7px; }
+    .c-title   { font-size:11px; font-weight:600; text-shadow:0 2px 8px rgba(0,0,0,.85); line-height:1.3; }
+    .c-price   {
+      font-size:14px; font-weight:900;
+      background: linear-gradient(135deg,#fff,rgba(255,255,255,.82));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+
+    .buy-btn {
+      width:100%; padding:9px; border:none;
+      background: linear-gradient(135deg, rgba(167,139,250,.82), rgba(96,165,250,.82));
+      border:1px solid rgba(255,255,255,.22); border-radius:11px;
+      color:#fff; font-size:11px; font-weight:800; letter-spacing:.7px;
+      text-transform:uppercase; cursor:pointer; position:relative; overflow:hidden;
+      backdrop-filter:blur(8px);
+      transition: all .3s cubic-bezier(.34,1.56,.64,1);
+    }
+    .buy-btn::before {
+      content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+      transition: left .55s ease;
+    }
+    .buy-btn:hover::before { left:100%; }
+    .buy-btn:hover {
+      transform:translateY(-2px);
+      box-shadow: 0 8px 22px rgba(167,139,250,.5);
+      background: linear-gradient(135deg, rgba(167,139,250,.96), rgba(96,165,250,.96));
+    }
+    .buy-btn:active { transform:scale(.97); }
+
+    /* ── featured (full width) ── */
+    .card.featured {
+      grid-column:1 / -1; aspect-ratio:16/9;
+      border-radius:24px;
+    }
+    .card.featured .c-title { font-size:13px; }
+    .card.featured .buy-btn { font-size:12px; padding:11px; }
+    .card.featured .c-price { font-size:16px; }
+
+    /* ── row price + meta ── */
+    .c-meta { display:flex; justify-content:space-between; align-items:center; }
+    .c-count { font-size:9px; color: var(--muted); }
+
+    /* ══════════════════════════════
+       SCROLL HINT
+    ══════════════════════════════ */
+    .scroll-hint {
+      display:flex; align-items:center; justify-content:center; gap:6px;
+      margin:22px 0 14px; color: var(--muted); font-size:10px; font-weight:500; letter-spacing:.5px;
+    }
+    .dot {
+      width:4px; height:4px; border-radius:50%;
+      background: var(--muted); animation: blink 1.6s ease infinite;
+    }
+    .dot:nth-child(2) { animation-delay:.25s; }
+    .dot:nth-child(3) { animation-delay:.5s; }
+    @keyframes blink { 0%,100%{opacity:.25} 50%{opacity:1} }
+
+    /* ══════════════════════════════
+       BOTTOM FADE
+    ══════════════════════════════ */
+    .fade-btm {
+      position:fixed; bottom:0; left:0; right:0; height:80px;
+      background: linear-gradient(transparent, var(--dark));
+      pointer-events:none; z-index:50;
+    }
+
+    /* ══════════════════════════════
+       ENTRY ANIMATIONS
+    ══════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    nav                 { animation: fadeUp .65s .1s  ease both; }
+    .card:nth-child(1)  { animation: fadeUp .6s  .15s ease both; }
+    .card:nth-child(2)  { animation: fadeUp .6s  .2s  ease both; }
+    .card:nth-child(3)  { animation: fadeUp .6s  .25s ease both; }
+    .card:nth-child(4)  { animation: fadeUp .6s  .3s  ease both; }
+    .card:nth-child(5)  { animation: fadeUp .6s  .35s ease both; }
+    .card:nth-child(6)  { animation: fadeUp .6s  .4s  ease both; }
+    .card:nth-child(7)  { animation: fadeUp .6s  .45s ease both; }
+    .card:nth-child(8)  { animation: fadeUp .6s  .5s  ease both; }
+    .card:nth-child(9)  { animation: fadeUp .6s  .55s ease both; }
+
+    @media (min-width:480px) { .wrap { padding:0 20px 120px; } }
+  </style>
+</head>
+<body>
+
+<!-- ── Background layers ── -->
+<div class="bg-layer"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="noise"></div>
+
+<div class="wrap">
+
+  <!-- ══ STAGE ══ -->
+  <div class="stage-wrap" id="stageWrap">
+    <div class="stage" id="stage">
+      <div class="stage-header">
+        <div class="avatar">U</div>
+        <div class="user-info">
+          <div class="username">@username</div>
+          <div class="user-sub">Premium Photography &nbsp;·&nbsp; Est. 2024</div>
+        </div>
+        <div class="verified">✓</div>
+      </div>
+
+      <div class="pay-label">Accepted Payments</div>
+      <div class="pay-row">
+        <div class="pay-chip"><span class="pi">💳</span> Visa</div>
+        <div class="pay-chip"><span class="pi">🔴</span> Mastercard</div>
+        <div class="pay-chip"><span class="pi">🅿️</span> PayPal</div>
+        <div class="pay-chip"><span class="pi">🍎</span> Apple Pay</div>
+        <div class="pay-chip"><span class="pi">₿</span> Crypto</div>
+        <div class="pay-chip"><span class="pi">💚</span> Cash App</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">248</div><div class="stat-l">Photos</div></div>
+        <div class="stat"><div class="stat-n">12k</div><div class="stat-l">Sales</div></div>
+        <div class="stat"><div class="stat-n">4.9★</div><div class="stat-l">Rating</div></div>
+        <div class="stat"><div class="stat-n">99%</div><div class="stat-l">Positive</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ NAV ══ -->
+  <div class="nav-outer" id="navOuter">
+    <nav>
+      <div class="logo">purchase<em>.pics.now</em></div>
+      <div class="hbg" id="hbg">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+    </nav>
+    <div class="dropdown" id="dropdown">
+      <div class="di"><div class="di-icon">🏠</div> Home</div>
+      <div class="di"><div class="di-icon">🖼️</div> Gallery</div>
+      <div class="di"><div class="di-icon">⭐</div> Featured</div>
+      <div class="di"><div class="di-icon">📦</div> Bundles</div>
+      <div class="di"><div class="di-icon">🔥</div> Trending</div>
+      <div class="di"><div class="di-icon">📬</div> Contact</div>
+    </div>
+  </div>
+
+  <!-- ══ GRID ══ -->
+  <div class="sec-label">
+    <div class="sec-title">Latest Drops</div>
+    <div class="sec-tag">✦ New</div>
+  </div>
+
+  <div class="grid">
+
+    <!-- Featured -->
+    <div class="card featured">
+      <div class="photo-bg" style="background-image:url('https://picsum.photos/seed/feat1/800/450')"></div>
+      <div class="lg-overlay"></div>
+      <div class="cc">
+        <div class="cc-top">
+          <div class="badge hot">🔥 Featured</div>
+          <div class="fav" data-liked="false">♡</div>
+        </div>
+        <div class="cc-bottom">
+          <div class="c-title">Premium Collection Vol. 1</div>
+          <div class="c-meta"><div class="c-price">$24.99</div><div class="c-count">12 photos</div></div>
+          <button class="buy-btn">Purchase Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="photo-bg" style="background-image:url('https://picsum.photos/seed/pp1/400/533')"></div>
+      <div class="lg-overlay"></div>
+      <div class="cc">
+        <div class="cc-top"><div class="badge new">New</div><div class="fav" data-liked="false">♡</div></div>
+        <div class="cc-bottom">
+          <div class="c-title">Golden Hour Series</div>
+          <div class="c-price">$4.99</div>
+          <button class="buy-btn">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="photo-bg" style="background-image:url('https://picsum.photos/seed/pp2/400/533')"></div>
+      <div class="lg-overlay"></div>
+      <div class="cc">
+        <div class="cc-top"><div class="badge hot">Hot</div><div class="fav" data-liked="false">♡</div></div>
+        <div class="cc-bottom">
+          <div class="c-title">Urban Nights Vol. 3</div>
+          <div class="c-price">$6.99</div>
+          <button class="buy-btn">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <div class="photo-bg" style="background-image:url('https://picsum.photos/seed/pp3/400/533')"></div>
+      <div class="lg-overlay"></div>
+      <div class="cc">
+        <div class="cc-top"><div class="badge excl">Exclusive</div><div class="fav" data-liked="false">♡</div></div>
+        <div class="cc-bottom">
+          <div class="c-title">Neon Reflections</div>
+          <div class="c-price">$8.99</div>
+          <button class="buy-btn">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <div class="photo-bg" style="background-image:url('https://picsum.photos/seed/pp4/400/533')"></div>
+      <div class="lg-overlay"></div>
+      <div class="cc">
+        <div class="cc-top"><div class="badge new">New</div><div class="fav" data-liked="false">♡</div></div>
+        <div class="cc-bottom">
+          <div class="c-title">Minimal Mood</div>
+          <div class="c-price">$3.99</div>
+          <button class="buy-btn">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="card">
+      <div class="photo-bg" style="background-image:url('https://picsum.photos/seed/pp5/400/533')"></div>
+      <div class="lg-overlay"></div>
+      <div class="cc">
+        <div class="cc-top"><div class="badge hot">🔥 Trending</div><div class="fav" data-liked="false">♡</div></div>
+        <div class="cc-bottom">
+          <div class="c-title">Ethereal Landscapes</div>
+          <div class="c-price">$7.99</div>
+          <button class="buy-btn">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="card">
+      <div class="photo-bg" style="background-image:url('https://picsum.photos/seed/pp6/400/533')"></div>
+      <div class="lg-overlay"></div>
+      <div class="cc">
+        <div class="cc-top"><div class="badge excl">Limited</div><div class="fav" data-liked="false">♡</div></div>
+        <div class="cc-bottom">
+          <div class="c-title">Cinematic Blur Pack</div>
+          <div class="c-price">$9.99</div>
+          <button class="buy-btn">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 7 -->
+    <div class="card">
+      <div class="photo-bg" style="background-image:url('https://picsum.photos/seed/pp7/400/533')"></div>
+      <div class="lg-overlay"></div>
+      <div class="cc">
+        <div class="cc-top"><div class="badge new">New</div><div class="fav" data-liked="false">♡</div></div>
+        <div class="cc-bottom">
+          <div class="c-title">Soft Light Series</div>
+          <div class="c-price">$5.99</div>
+          <button class="buy-btn">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 8 -->
+    <div class="card">
+      <div class="photo-bg" style="background-image:url('https://picsum.photos/seed/pp8/400/533')"></div>
+      <div class="lg-overlay"></div>
+      <div class="cc">
+        <div class="cc-top"><div class="badge hot">Hot</div><div class="fav" data-liked="false">♡</div></div>
+        <div class="cc-bottom">
+          <div class="c-title">Dream State Vol. 2</div>
+          <div class="c-price">$6.49</div>
+          <button class="buy-btn">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second featured -->
+    <div class="card featured" style="margin-top:2px;">
+      <div class="photo-bg" style="background-image:url('https://picsum.photos/seed/feat2/800/450')"></div>
+      <div class="lg-overlay"></div>
+      <div class="cc">
+        <div class="cc-top">
+          <div class="badge excl">⚡ Bundle Deal</div>
+          <div class="fav" data-liked="false">♡</div>
+        </div>
+        <div class="cc-bottom">
+          <div class="c-title">The Complete Archive – All 248 Photos</div>
+          <div class="c-meta"><div class="c-price">$49.99</div><div class="c-count">Save 70%</div></div>
+          <button class="buy-btn">Get Everything</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+
+  <div class="scroll-hint">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <span>More drops below</span>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+
+</div><!-- /wrap -->
+
+<div class="fade-btm"></div>
+
+<script>
+  /* ── Hamburger ── */
+  const hbg = document.getElementById('hbg');
+  const dd  = document.getElementById('dropdown');
+  hbg.addEventListener('click', (e) => {
+    e.stopPropagation();
+    hbg.classList.toggle('open');
+    dd.classList.toggle('open');
+  });
+  document.addEventListener('click', () => {
+    hbg.classList.remove('open');
+    dd.classList.remove('open');
+  });
+  dd.addEventListener('click', (e) => e.stopPropagation());
+
+  /* ── 3D tilt on stage ── */
+  const stageWrap = document.getElementById('stageWrap');
+  const stage     = document.getElementById('stage');
+  stageWrap.addEventListener('mousemove', (e) => {
+    const r = stageWrap.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    stage.style.transform = `rotateY(${x*9}deg) rotateX(${-y*6}deg) translateZ(12px)`;
+  });
+  stageWrap.addEventListener('mouseleave', () => {
+    stage.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
+  });
+
+  /* ── Heart toggle ── */
+  document.querySelectorAll('.fav').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const on = btn.dataset.liked === 'true';
+      btn.dataset.liked = String(!on);
+      btn.textContent  = on ? '♡' : '♥';
+      btn.style.color        = on ? '' : '#f472b6';
+      btn.style.borderColor  = on ? '' : 'rgba(244,114,182,.55)';
+      btn.style.background   = on ? '' : 'rgba(244,114,182,.22)';
+      if (!on) {
+        btn.style.transform = 'scale(1.35)';
+        setTimeout(() => (btn.style.transform = ''), 220);
+      }
+    });
+  });
+
+  /* ── Ripple on buy buttons ── */
+  const rippleStyle = document.createElement('style');
+  rippleStyle.textContent = '@keyframes ripple { to { transform:scale(2.8); opacity:0; } }';
+  document.head.appendChild(rippleStyle);
+
+  document.querySelectorAll('.buy-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const r    = btn.getBoundingClientRect();
+      const size = Math.max(r.width, r.height);
+      const sp   = document.createElement('span');
+      sp.style.cssText = `
+        position:absolute; border-radius:50%; pointer-events:none;
+        width:${size}px; height:${size}px;
+        top:${e.clientY - r.top - size/2}px;
+        left:${e.clientX - r.left - size/2}px;
+        background:rgba(255,255,255,.28);
+        transform:scale(0); animation:ripple .65s ease-out forwards;
+      `;
+      btn.appendChild(sp);
+      setTimeout(() => sp.remove(), 700);
+    });
+  });
+
+  /* ── Scroll-in fade for cards below fold ── */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        en.target.style.opacity  = '1';
+        en.target.style.transform = 'translateY(0)';
+        io.unobserve(en.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.card').forEach((c, i) => {
+    if (i > 4) {
+      c.style.opacity   = '0';
+      c.style.transform = 'translateY(28px)';
+      c.style.transition = 'opacity .6s ease, transform .6s ease';
+      io.observe(c);
+    }
+  });
+</script>
+</body>
+</html>
