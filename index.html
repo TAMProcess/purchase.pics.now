@@ -297,7 +297,13 @@
       background-size:cover; background-position:center;
       transform:scale(1.06); transition: transform .7s ease;
     }
+    .preview-video {
+      position:absolute; inset:0;
+      width:100%; height:100%; object-fit:cover;
+      transform:scale(1.06); transition: transform .7s ease;
+    }
     .card:hover .photo-bg { transform:scale(1.13); }
+    .card:hover .preview-video { transform:scale(1.13); }
 
     /* liquid glass overlay */
     .lg-overlay {
@@ -509,7 +515,15 @@
 
     <!-- Featured -->
     <div class="card featured">
-      <div class="photo-bg" style="background-image:url('assets/photos/person-01.jpg')"></div>
+      <video
+        class="preview-video"
+        src="assets/videos/premium-preview.mp4"
+        muted
+        playsinline
+        preload="metadata"
+        poster="assets/photos/person-01.jpg"
+        data-boomerang
+      ></video>
       <div class="lg-overlay"></div>
       <div class="cc">
         <div class="cc-top">
@@ -751,6 +765,32 @@
       c.style.transition = 'opacity .6s ease, transform .6s ease';
       io.observe(c);
     }
+  });
+
+  /* ── Boomerang preview video ── */
+  document.querySelectorAll('[data-boomerang]').forEach((video) => {
+    let reverseRaf = null;
+    let isReversing = false;
+    const reverseStep = () => {
+      if (!isReversing) return;
+      video.currentTime = Math.max(0, video.currentTime - 1 / 30);
+      if (video.currentTime <= 0.03) {
+        isReversing = false;
+        video.play().catch(() => {});
+        return;
+      }
+      reverseRaf = requestAnimationFrame(reverseStep);
+    };
+
+    video.addEventListener('loadedmetadata', () => {
+      video.play().catch(() => {});
+    });
+
+    video.addEventListener('ended', () => {
+      isReversing = true;
+      if (reverseRaf) cancelAnimationFrame(reverseRaf);
+      reverseRaf = requestAnimationFrame(reverseStep);
+    });
   });
 </script>
 </body>
