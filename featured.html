@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Featured | purchase.pics.now</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root { --accent:#a78bfa; --accent2:#60a5fa; --bg:#06060f; --glass:rgba(255,255,255,.07); --glassB:rgba(255,255,255,.14); --text:rgba(255,255,255,.93); --muted:rgba(255,255,255,.55); }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+    .bg { position:fixed; inset:0; z-index:0; background:radial-gradient(circle at 20% 20%, rgba(167,139,250,.22), transparent 40%), radial-gradient(circle at 85% 80%, rgba(96,165,250,.18), transparent 40%); }
+    .wrap { position:relative; z-index:1; max-width:520px; margin:0 auto; padding:18px 14px 90px; }
+    .nav { position:sticky; top:10px; z-index:20; display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-radius:18px; background:var(--glass); border:1px solid var(--glassB); backdrop-filter:blur(24px); }
+    .logo { color:#fff; text-decoration:none; font-weight:800; font-size:14px; }
+    .hbg { width:36px; height:36px; border-radius:10px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.08); display:flex; flex-direction:column; gap:4px; align-items:center; justify-content:center; cursor:pointer; }
+    .hbg span { width:16px; height:2px; border-radius:2px; background:#fff; }
+    .dropdown { position:absolute; right:14px; top:62px; width:210px; padding:8px; border-radius:16px; border:1px solid rgba(255,255,255,.14); background:rgba(8,8,20,.95); backdrop-filter:blur(24px); display:none; }
+    .dropdown.open { display:block; }
+    .di { display:flex; gap:10px; align-items:center; padding:10px; border-radius:10px; color:var(--muted); text-decoration:none; }
+    .di:hover { background:rgba(255,255,255,.08); color:#fff; }
+    .back { margin:12px 0 16px; display:inline-block; color:#fff; text-decoration:none; font-weight:600; border:1px solid rgba(255,255,255,.2); border-radius:999px; padding:8px 12px; background:rgba(255,255,255,.06); }
+    .title { font-size:26px; font-weight:800; margin-bottom:8px; }
+    .sub { color:var(--muted); font-size:13px; margin-bottom:14px; }
+    .feature { border-radius:22px; overflow:hidden; border:1px solid rgba(255,255,255,.14); background:var(--glass); margin-bottom:14px; box-shadow:0 20px 50px rgba(0,0,0,.5); }
+    .media { position:relative; height:210px; }
+    .media img, .media video { width:100%; height:100%; object-fit:cover; display:block; }
+    .media::after { content:''; position:absolute; inset:0; backdrop-filter:blur(15px) saturate(155%) brightness(.88); -webkit-backdrop-filter:blur(15px) saturate(155%) brightness(.88); background:rgba(8,8,24,.22); }
+    .meta { padding:12px; }
+    .name { font-size:14px; font-weight:700; margin-bottom:6px; }
+    .desc { font-size:12px; color:var(--muted); margin-bottom:10px; }
+    .row { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .price { font-size:17px; font-weight:800; }
+    .buy { display:block; text-align:center; min-width:110px; text-decoration:none; color:#fff; font-size:11px; font-weight:800; letter-spacing:.6px; text-transform:uppercase; padding:9px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.22); background:linear-gradient(135deg, rgba(167,139,250,.86), rgba(96,165,250,.88)); }
+  </style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="wrap">
+  <div class="nav">
+    <a class="logo" href="index.html">purchase.pics.now</a>
+    <button class="hbg" id="hbg" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+  <div class="dropdown" id="dropdown">
+    <a class="di" href="index.html">🏠 Home</a>
+    <a class="di" href="gallery.html">🖼️ Gallery</a>
+    <a class="di" href="featured.html">⭐ Featured</a>
+    <a class="di" href="bundles.html">📦 Bundles</a>
+    <a class="di" href="trending.html">🔥 Trending</a>
+  </div>
+
+  <a class="back" href="index.html">← Back to Home</a>
+  <h1 class="title">Featured</h1>
+  <p class="sub">Top picks with highest conversion. All purchase buttons go to cart + instant payment mockup.</p>
+
+  <article class="feature">
+    <div class="media">
+      <video src="assets/videos/premium-preview.mp4" muted autoplay loop playsinline poster="assets/photos/person-01.jpg"></video>
+    </div>
+    <div class="meta">
+      <div class="name">Premium Collection Vol. 1</div>
+      <div class="desc">Hero release with boomerang-style preview behavior on Home.</div>
+      <div class="row"><div class="price">$24.99</div><a class="buy" href="cart.html?item=premium-collection-vol-1">Purchase Now</a></div>
+    </div>
+  </article>
+
+  <article class="feature">
+    <div class="media"><img src="assets/photos/person-10.jpg" alt="featured bundle" /></div>
+    <div class="meta">
+      <div class="name">Complete Archive</div>
+      <div class="desc">All 248 photos in one package with premium license mockup.</div>
+      <div class="row"><div class="price">$49.99</div><a class="buy" href="cart.html?item=complete-archive">Get Everything</a></div>
+    </div>
+  </article>
+
+  <article class="feature">
+    <div class="media"><img src="assets/photos/person-06.jpg" alt="featured trending" /></div>
+    <div class="meta">
+      <div class="name">Ethereal Landscapes</div>
+      <div class="desc">Best-performing atmospheric set for profile and story use.</div>
+      <div class="row"><div class="price">$7.99</div><a class="buy" href="cart.html?item=ethereal-landscapes">Buy Now</a></div>
+    </div>
+  </article>
+</div>
+<script>
+const hbg = document.getElementById('hbg');
+const dd = document.getElementById('dropdown');
+hbg.addEventListener('click', (e) => { e.stopPropagation(); dd.classList.toggle('open'); });
+document.addEventListener('click', () => dd.classList.remove('open'));
+</script>
+</body>
+</html>

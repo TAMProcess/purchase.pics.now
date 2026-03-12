@@ -232,6 +232,7 @@
       padding:11px 13px; border-radius:12px;
       font-size:13px; font-weight:500; color:rgba(255,255,255,.7);
       cursor:pointer; transition: all .2s ease;
+      text-decoration:none;
     }
     .di:hover { background: rgba(255,255,255,.08); color:#fff; }
     .di-icon {
@@ -371,6 +372,9 @@
       text-transform:uppercase; cursor:pointer; position:relative; overflow:hidden;
       backdrop-filter:blur(8px);
       transition: all .3s cubic-bezier(.34,1.56,.64,1);
+      display:block;
+      text-align:center;
+      text-decoration:none;
     }
     .buy-btn::before {
       content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
@@ -488,7 +492,7 @@
   <!-- ══ NAV ══ -->
   <div class="nav-outer" id="navOuter">
     <nav>
-      <div class="logo">purchase<em>.pics.now</em></div>
+      <a class="logo" href="index.html">purchase<em>.pics.now</em></a>
       <div class="hbg" id="hbg">
         <div class="bar"></div>
         <div class="bar"></div>
@@ -496,12 +500,11 @@
       </div>
     </nav>
     <div class="dropdown" id="dropdown">
-      <div class="di"><div class="di-icon">🏠</div> Home</div>
-      <div class="di"><div class="di-icon">🖼️</div> Gallery</div>
-      <div class="di"><div class="di-icon">⭐</div> Featured</div>
-      <div class="di"><div class="di-icon">📦</div> Bundles</div>
-      <div class="di"><div class="di-icon">🔥</div> Trending</div>
-      <div class="di"><div class="di-icon">📬</div> Contact</div>
+      <a class="di" href="index.html"><div class="di-icon">🏠</div> Home</a>
+      <a class="di" href="gallery.html"><div class="di-icon">🖼️</div> Gallery</a>
+      <a class="di" href="featured.html"><div class="di-icon">⭐</div> Featured</a>
+      <a class="di" href="bundles.html"><div class="di-icon">📦</div> Bundles</a>
+      <a class="di" href="trending.html"><div class="di-icon">🔥</div> Trending</a>
     </div>
   </div>
 
@@ -533,7 +536,7 @@
         <div class="cc-bottom">
           <div class="c-title">Premium Collection Vol. 1</div>
           <div class="c-meta"><div class="c-price">$24.99</div><div class="c-count">12 photos</div></div>
-          <button class="buy-btn">Purchase Now</button>
+          <a class="buy-btn" href="cart.html?item=premium-collection-vol-1">Purchase Now</a>
         </div>
       </div>
     </div>
@@ -547,7 +550,7 @@
         <div class="cc-bottom">
           <div class="c-title">Golden Hour Series</div>
           <div class="c-price">$4.99</div>
-          <button class="buy-btn">Buy</button>
+          <a class="buy-btn" href="cart.html?item=golden-hour-series">Buy</a>
         </div>
       </div>
     </div>
@@ -561,7 +564,7 @@
         <div class="cc-bottom">
           <div class="c-title">Urban Nights Vol. 3</div>
           <div class="c-price">$6.99</div>
-          <button class="buy-btn">Buy</button>
+          <a class="buy-btn" href="cart.html?item=urban-nights-vol-3">Buy</a>
         </div>
       </div>
     </div>
@@ -575,7 +578,7 @@
         <div class="cc-bottom">
           <div class="c-title">Neon Reflections</div>
           <div class="c-price">$8.99</div>
-          <button class="buy-btn">Buy</button>
+          <a class="buy-btn" href="cart.html?item=neon-reflections">Buy</a>
         </div>
       </div>
     </div>
@@ -589,7 +592,7 @@
         <div class="cc-bottom">
           <div class="c-title">Minimal Mood</div>
           <div class="c-price">$3.99</div>
-          <button class="buy-btn">Buy</button>
+          <a class="buy-btn" href="cart.html?item=minimal-mood">Buy</a>
         </div>
       </div>
     </div>
@@ -603,7 +606,7 @@
         <div class="cc-bottom">
           <div class="c-title">Ethereal Landscapes</div>
           <div class="c-price">$7.99</div>
-          <button class="buy-btn">Buy</button>
+          <a class="buy-btn" href="cart.html?item=ethereal-landscapes">Buy</a>
         </div>
       </div>
     </div>
@@ -617,7 +620,7 @@
         <div class="cc-bottom">
           <div class="c-title">Cinematic Blur Pack</div>
           <div class="c-price">$9.99</div>
-          <button class="buy-btn">Buy</button>
+          <a class="buy-btn" href="cart.html?item=cinematic-blur-pack">Buy</a>
         </div>
       </div>
     </div>
@@ -631,7 +634,7 @@
         <div class="cc-bottom">
           <div class="c-title">Soft Light Series</div>
           <div class="c-price">$5.99</div>
-          <button class="buy-btn">Buy</button>
+          <a class="buy-btn" href="cart.html?item=soft-light-series">Buy</a>
         </div>
       </div>
     </div>
@@ -645,7 +648,7 @@
         <div class="cc-bottom">
           <div class="c-title">Dream State Vol. 2</div>
           <div class="c-price">$6.49</div>
-          <button class="buy-btn">Buy</button>
+          <a class="buy-btn" href="cart.html?item=dream-state-vol-2">Buy</a>
         </div>
       </div>
     </div>
@@ -662,7 +665,7 @@
         <div class="cc-bottom">
           <div class="c-title">The Complete Archive – All 248 Photos</div>
           <div class="c-meta"><div class="c-price">$49.99</div><div class="c-count">Save 70%</div></div>
-          <button class="buy-btn">Get Everything</button>
+          <a class="buy-btn" href="cart.html?item=complete-archive">Get Everything</a>
         </div>
       </div>
     </div>

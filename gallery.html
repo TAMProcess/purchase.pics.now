@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery | purchase.pics.now</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root { --accent:#a78bfa; --accent2:#60a5fa; --bg:#06060f; --glass:rgba(255,255,255,.07); --glassB:rgba(255,255,255,.14); --text:rgba(255,255,255,.93); --muted:rgba(255,255,255,.55); }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+    .bg { position:fixed; inset:0; z-index:0; background:radial-gradient(circle at 15% 15%, rgba(167,139,250,.22), transparent 40%), radial-gradient(circle at 85% 85%, rgba(96,165,250,.18), transparent 40%); }
+    .wrap { position:relative; z-index:1; max-width:520px; margin:0 auto; padding:18px 14px 100px; }
+    .nav { position:sticky; top:10px; z-index:20; display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-radius:18px; background:var(--glass); border:1px solid var(--glassB); backdrop-filter:blur(24px); }
+    .logo { color:#fff; text-decoration:none; font-weight:800; font-size:14px; }
+    .hbg { width:36px; height:36px; border-radius:10px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.08); display:flex; flex-direction:column; gap:4px; align-items:center; justify-content:center; cursor:pointer; }
+    .hbg span { width:16px; height:2px; border-radius:2px; background:#fff; }
+    .dropdown { position:absolute; right:14px; top:62px; width:210px; padding:8px; border-radius:16px; border:1px solid rgba(255,255,255,.14); background:rgba(8,8,20,.95); backdrop-filter:blur(24px); display:none; }
+    .dropdown.open { display:block; }
+    .di { display:flex; gap:10px; align-items:center; padding:10px; border-radius:10px; color:var(--muted); text-decoration:none; }
+    .di:hover { background:rgba(255,255,255,.08); color:#fff; }
+    .back { margin:12px 0 16px; display:inline-block; color:#fff; text-decoration:none; font-weight:600; border:1px solid rgba(255,255,255,.2); border-radius:999px; padding:8px 12px; background:rgba(255,255,255,.06); }
+    .title { font-size:26px; font-weight:800; letter-spacing:-.5px; margin-bottom:8px; }
+    .sub { color:var(--muted); font-size:13px; margin-bottom:14px; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .card { border-radius:18px; overflow:hidden; background:var(--glass); border:1px solid rgba(255,255,255,.12); box-shadow:0 18px 45px rgba(0,0,0,.45); }
+    .img { height:170px; background-size:cover; background-position:center; position:relative; }
+    .img::after { content:''; position:absolute; inset:0; backdrop-filter:blur(15px) saturate(155%) brightness(.88); -webkit-backdrop-filter:blur(15px) saturate(155%) brightness(.88); background:rgba(8,8,24,.22); }
+    .body { padding:10px; }
+    .name { font-weight:700; font-size:12px; margin-bottom:6px; }
+    .price { font-size:16px; font-weight:800; margin-bottom:8px; }
+    .buy { display:block; text-align:center; text-decoration:none; color:#fff; font-size:11px; font-weight:800; letter-spacing:.6px; text-transform:uppercase; padding:9px; border-radius:10px; border:1px solid rgba(255,255,255,.22); background:linear-gradient(135deg, rgba(167,139,250,.86), rgba(96,165,250,.88)); }
+  </style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="wrap">
+  <div class="nav">
+    <a class="logo" href="index.html">purchase.pics.now</a>
+    <button class="hbg" id="hbg" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+  <div class="dropdown" id="dropdown">
+    <a class="di" href="index.html">🏠 Home</a>
+    <a class="di" href="gallery.html">🖼️ Gallery</a>
+    <a class="di" href="featured.html">⭐ Featured</a>
+    <a class="di" href="bundles.html">📦 Bundles</a>
+    <a class="di" href="trending.html">🔥 Trending</a>
+  </div>
+
+  <a class="back" href="index.html">← Back to Home</a>
+  <h1 class="title">Gallery</h1>
+  <p class="sub">Browse all photo drops. Every Buy action opens the cart and instant payment mockup.</p>
+
+  <div class="grid">
+    <article class="card"><div class="img" style="background-image:url('assets/photos/person-02.jpg')"></div><div class="body"><div class="name">Golden Hour Series</div><div class="price">$4.99</div><a class="buy" href="cart.html?item=golden-hour-series">Buy</a></div></article>
+    <article class="card"><div class="img" style="background-image:url('assets/photos/person-03.jpg')"></div><div class="body"><div class="name">Urban Nights Vol. 3</div><div class="price">$6.99</div><a class="buy" href="cart.html?item=urban-nights-vol-3">Buy</a></div></article>
+    <article class="card"><div class="img" style="background-image:url('assets/photos/person-04.jpg')"></div><div class="body"><div class="name">Neon Reflections</div><div class="price">$8.99</div><a class="buy" href="cart.html?item=neon-reflections">Buy</a></div></article>
+    <article class="card"><div class="img" style="background-image:url('assets/photos/person-05.jpg')"></div><div class="body"><div class="name">Minimal Mood</div><div class="price">$3.99</div><a class="buy" href="cart.html?item=minimal-mood">Buy</a></div></article>
+    <article class="card"><div class="img" style="background-image:url('assets/photos/person-06.jpg')"></div><div class="body"><div class="name">Ethereal Landscapes</div><div class="price">$7.99</div><a class="buy" href="cart.html?item=ethereal-landscapes">Buy</a></div></article>
+    <article class="card"><div class="img" style="background-image:url('assets/photos/person-09.jpg')"></div><div class="body"><div class="name">Dream State Vol. 2</div><div class="price">$6.49</div><a class="buy" href="cart.html?item=dream-state-vol-2">Buy</a></div></article>
+  </div>
+</div>
+<script>
+const hbg = document.getElementById('hbg');
+const dd = document.getElementById('dropdown');
+hbg.addEventListener('click', (e) => { e.stopPropagation(); dd.classList.toggle('open'); });
+document.addEventListener('click', () => dd.classList.remove('open'));
+</script>
+</body>
+</html>
